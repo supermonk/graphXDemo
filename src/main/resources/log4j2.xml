@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <properties>
+        <property name="name">graphXDemo</property>
+        <property name="pattern">%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %msg%n</property>
+    </properties>
+
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}" />
+        </Console>
+        <RollingFile name="RollingFile" fileName="/log/${name}.log"
+                     filePattern="/log/${name}-%d-%i.log.gz">
+            <PatternLayout>
+                <pattern>${pattern}</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy /><!-- Rotated everyday -->
+                <SizeBasedTriggeringPolicy size="100 MB" /> <!-- Or every 100 MB -->
+            </Policies>
+        </RollingFile>
+    </appenders>
+    <loggers>
+        <root level="INFO"> <!-- We log everything -->
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFile" /> <!-- And to a rotated file -->
+        </root>
+    </loggers>
+</configuration>

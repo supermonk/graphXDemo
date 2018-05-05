@@ -1,16 +1,13 @@
 import org.apache.spark.SparkConf
 import org.apache.spark.graphx.GraphLoader
 import org.apache.spark.sql.SparkSession
+import org.apache.log4j.{Level, Logger}
+import org.apache.logging.log4j.scala.Logging
 
-
-
-
-
-
-object Sample {
+object Sample extends Logging {
 
   def main(args: Array[String]): Unit = {
-    print("Hello World")
+    logger.info("Hello World")
 
 
 
@@ -31,20 +28,19 @@ object Sample {
 
 
     // Join the ranks with the usernames
-    /*val users = sc.textFile("users.txt").map { line =>
+    val users = sc.textFile("users.txt").map { line =>
       val fields = line.split(",")
       (fields(0).toLong, fields(1))
     }
     val ranksByUsername = users.join(ranks).map {
       case (id, (username, rank)) => (username, rank)
     }
-    */
     // Print the result
-    //println(ranksByUsername.collect().mkString("\n"))
-    print(ranks.collect().mkString("\n"))
+    logger.info(ranksByUsername.collect().mkString("\n"))
+    logger.info(ranks.collect().mkString("\n"))
     // $example off$
 
-
+    Thread.sleep(10000)
     spark.stop()
 
   }
